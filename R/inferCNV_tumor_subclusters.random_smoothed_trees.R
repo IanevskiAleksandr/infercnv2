@@ -255,7 +255,7 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
     max_rand_heights <- foreach (i=seq_len(num_rand_iters)) %dopar% {
         #message("rand iteration: ", i)
         
-        rand.tumor.expr.data = t(permute_col_vals( t(expr_matrix) ))
+        rand.tumor.expr.data = shuffle(expr_matrix); #t(permute_col_vals( t(expr_matrix) ))
         
         ## smooth it and re-center:
         sm.rand.tumor.expr.data = apply(rand.tumor.expr.data, 2, caTools::runmean, k=window_size)
