@@ -224,10 +224,9 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
     # sm_expr_data = scale(sm_expr_data, center=TRUE, scale=FALSE)
     sm_expr_data = .center_columns(sm_expr_data, 'median')
 
-    
-    d = parallelDist(t(sm_expr_data), threads=infercnv.env$GLOBAL_NUM_THREADS)
-    
-    h_obs = hclust(d, method=hclust_method)
+    d = Rfast::Dist(t(sm_expr_data))
+    #d = parallelDist(t(sm_expr_data), threads=infercnv.env$GLOBAL_NUM_THREADS)
+    h_obs = hclust(as.dist(d), method=hclust_method)
     
         
     # permute by chromosomes
