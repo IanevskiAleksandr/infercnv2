@@ -252,7 +252,7 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
     
     # library(doParallel)
     registerDoParallel(cores=infercnv.env$GLOBAL_NUM_THREADS)
-    num_rand_iters=100
+    num_rand_iters=12
     max_rand_heights <- foreach (i=seq_len(num_rand_iters)) %dopar% {
         #message("rand iteration: ", i)
         
@@ -263,13 +263,18 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
         # sm.rand.tumor.expr.data = scale(sm.rand.tumor.expr.data, center=TRUE, scale=FALSE)
         sm.rand.tumor.expr.data = .center_columns(sm.rand.tumor.expr.data, 'median')
         
-        rand.dist = parallelDist(t(sm.rand.tumor.expr.data), threads=infercnv.env$GLOBAL_NUM_THREADS)
-        h_rand <- hclust(rand.dist, method=hclust_method)
-        max_rand_height <- max(h_rand$height)
-
-        max_rand_height
+        #rand.dist = parallelDist(t(sm.rand.tumor.expr.data), threads=infercnv.env$GLOBAL_NUM_THREADS)
+        #h_rand <- hclust(rand.dist, method=hclust_method)
+        rand.dist = Rfast::Dist(t(sm.rand.tumor.expr.data))
+        h_rand = hclust(as.dist(rand.dist), method=hclust_method)
+      
+        max(h_rand$height)
+        #max_rand_height <- max(h_rand$height)
+        #max_rand_height
     }
-    
+    # It is good practice to shut down the workers 
+    doParallel::stopImplicitCluster()  
+  
     max_rand_heights <- as.numeric(max_rand_heights)
     
     h = h_obs$height
