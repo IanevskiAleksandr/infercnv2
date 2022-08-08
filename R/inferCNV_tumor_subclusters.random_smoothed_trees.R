@@ -215,6 +215,8 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
 
 
 .parameterize_random_cluster_heights_smoothed_trees <- function(expr_matrix, hclust_method, window_size, plot=FALSE) {
+  
+    saveRDS(list(expr_matrix = expr_matrix, hclust_method = hclust_method, window_size = window_size), "obj_tst.RDS");
     
     ## inspired by: https://www.frontiersin.org/articles/10.3389/fgene.2016.00144/full
 
