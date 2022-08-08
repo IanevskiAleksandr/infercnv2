@@ -281,7 +281,7 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
     
     max_height = max(h)
     
-    message(sprintf("Lengths for original tree branches (h): %s", paste(h, sep=",", collapse=",")))
+    #message(sprintf("Lengths for original tree branches (h): %s", paste(h, sep=",", collapse=",")))
     message(sprintf("Max height: %g", max_height))
 
     message(sprintf("Lengths for max heights: %s", paste(max_rand_heights, sep=",", collapse=",")))
