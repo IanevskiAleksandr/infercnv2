@@ -265,8 +265,9 @@ define_signif_tumor_subclusters_via_random_smooothed_trees <- function(infercnv_
         
         #rand.dist = parallelDist(t(sm.rand.tumor.expr.data), threads=infercnv.env$GLOBAL_NUM_THREADS)
         #h_rand <- hclust(rand.dist, method=hclust_method)
-        rand.dist = Rfast::Dist(t(sm.rand.tumor.expr.data))
-        h_rand = hclust(as.dist(rand.dist), method=hclust_method)
+        #rand.dist = Rfast::Dist(t(sm.rand.tumor.expr.data))
+        #h_rand = hclust(as.dist(rand.dist), method=hclust_method)
+        h_rand = hclust(as.dist(Rfast::Dist(t(sm.rand.tumor.expr.data))), method=hclust_method)
       
         max(h_rand$height)
         #max_rand_height <- max(h_rand$height)
